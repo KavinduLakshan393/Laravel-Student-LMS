@@ -27,7 +27,10 @@
 
             <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                 <div class="max-w-3xl">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Your Enrolled Courses</h3>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">
+                        Your Enrolled Courses
+                    </h3>
+
                     @if($enrollments->count() > 0)
                         <div class="overflow-x-auto">
                             <table class="min-w-full border-collapse border border-gray-300">
@@ -42,17 +45,30 @@
                                 <tbody>
                                     @foreach($enrollments as $enrollment)
                                         <tr class="hover:bg-gray-100">
-                                            <td class="border border-gray-300 px-4 py-2">{{ $enrollment->course->title }}</td>
-                                            <td class="border border-gray-300 px-4 py-2">{{ $enrollment->course->instructor ?? 'N/A' }}</td>
-                                            <td class="border border-gray-300 px-4 py-2">{{ $enrollment->course->duration ? $enrollment->course->duration . ' hours' : 'N/A' }}</td>
-                                            <td class="border border-gray-300 px-4 py-2 text-sm">{{ Str::limit($enrollment->course->description, 100) ?? 'N/A' }}</td>
+                                            <td class="border border-gray-300 px-4 py-2">
+                                                {{ $enrollment->course?->title ?? 'Course not available' }}
+                                            </td>
+                                            <td class="border border-gray-300 px-4 py-2">
+                                                {{ $enrollment->course?->instructor ?? 'N/A' }}
+                                            </td>
+                                            <td class="border border-gray-300 px-4 py-2">
+                                                {{ $enrollment->course?->duration ? $enrollment->course->duration . ' hours' : 'N/A' }}
+                                            </td>
+                                            <td class="border border-gray-300 px-4 py-2 text-sm">
+                                                {{ \Illuminate\Support\Str::limit($enrollment->course?->description ?? 'N/A', 100) }}
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
                             </table>
                         </div>
                     @else
-                        <p class="text-gray-600 italic">You are not enrolled in any courses yet. <a href="{{ route('courses.index') }}" class="text-blue-600 hover:underline">Browse available courses</a></p>
+                        <p class="text-gray-600 italic">
+                            You are not enrolled in any courses yet.
+                            <a href="{{ route('courses.index') }}" class="text-blue-600 hover:underline">
+                                Browse available courses
+                            </a>
+                        </p>
                     @endif
                 </div>
             </div>
